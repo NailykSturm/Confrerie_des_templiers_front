@@ -1,0 +1,10 @@
+# NPM
+node_modules
+package-lock.json
+
+# Build
+dist
+
+# IDE
+.idea
+.vscode
