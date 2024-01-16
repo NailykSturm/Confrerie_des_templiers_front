@@ -1,7 +1,7 @@
 {
-  "name": "logger-viewer-frontend",
+  "name": "confrerie_des_templiers_front",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,17 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "tailwindcss": "^3.3.5",
-    "daisyui": "^3.9.4",
-    "vue": "^3.3.4",
+    "daisyui": "^4.6.0",
+    "tailwindcss": "^3.4.1",
+    "vue": "^3.4.14",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
+    "@types/node": "^20.11.4",
+    "@vitejs/plugin-vue": "^5.0.3",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "vue-tsc": "^1.8.5"
+    "postcss": "^8.4.33",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11",
+    "vue-tsc": "^1.8.27"
   }
 }
