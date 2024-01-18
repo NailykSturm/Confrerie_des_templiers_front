@@ -4,29 +4,37 @@ import { AEdge } from "./AEdge";
  * @abstract Node class
  */
 export abstract class ANode {
-  private _name: string;
-  private _edges: AEdge[];
+    private _id: number;
+    private _name: string;
+    private _edges: AEdge[];
 
-  constructor(name: string) {
-    this._name = name;
-    this._edges = [];
-  }
+    constructor(id: number, name: string) {
+        this._id = id;
+        this._name = name;
+        this._edges = [];
+    }
 
-  get name(): string {
-    return this._name;
-  }
+    get id(): number {
+        return this._id;
+    }
 
-  get edges(): AEdge[] {
-    return this._edges;
-  }
+    get name(): string {
+        return this._name;
+    }
 
-  addEdge(edge: AEdge): void {
-    this._edges.push(edge);
-  }
+    get edges(): AEdge[] {
+        return this._edges;
+    }
 
-  removeEdge(edge: AEdge): void {
-    this._edges = this._edges.filter((e) => e !== edge);
-  }
+    addEdge(edge: AEdge): void {
+        this._edges.push(edge);
+    }
 
-  abstract toString(): string;
+    removeEdge(edge: AEdge): void {
+        this._edges = this._edges.filter((e) => e !== edge);
+    }
+
+    abstract toString(): string;
+
+    abstract getAttributes(): object;
 }
