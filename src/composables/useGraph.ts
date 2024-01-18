@@ -5,12 +5,10 @@ import { TitleComponent, TooltipComponent, LegendComponent } from "echarts/compo
 import { GraphChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 
-import data from "../assets/example/example_echarts.json";
 import graphApiExemple from "../assets/example/example_api.json";
 import { Graph, NodeType } from "../types/Graph";
 import { Node } from "../types/Node";
 import { Edge } from "../types/Edge";
-import { get } from "node_modules/axios/index.d.cts";
 
 interface node {
     id: number;
@@ -56,9 +54,10 @@ export default function useGraph() {
         const categories: category[] = [];
 
         graph.value.nodes.forEach((node) => {
-            categories.push({
-                name: NodeType[node.type],
-            });
+            if (!categories.find((cat) => cat.name === NodeType[node.type]))
+                categories.push({
+                    name: NodeType[node.type],
+                });
         });
 
         graph.value.nodes.forEach((node) => {
@@ -72,21 +71,23 @@ export default function useGraph() {
                 categorie: categories.findIndex((cat) => cat.name === NodeType[node.type]),
             });
         });
+
         graph.value.edges.forEach((edge) => {
             links.push({
                 source: edge.node1.id,
                 target: edge.node2.id,
             });
         });
+        console.log({ nodes, links, categories });
         return { nodes, links, categories };
     }
 
-    function refreshGraph(drawer_toggle: Ref<HTMLInputElement | null>) {
+    function refreshGraph() {
         graphDisplay.value!.showLoading();
 
         charOpts.value = getGraphData();
 
-        charOpts.value.nodes.forEach(function (node) {
+        charOpts.value.nodes.forEach((node) => {
             node.label = {
                 show: node.symbolSize > 30,
             };
@@ -103,7 +104,7 @@ export default function useGraph() {
             legend: [
                 {
                     // selectedMode: 'single',
-                    data: charOpts.value.categories.map(function (a) {
+                    data: charOpts.value.categories.map((a) => {
                         return a.name;
                     }),
                 },
@@ -125,7 +126,7 @@ export default function useGraph() {
                     },
                     lineStyle: {
                         color: "source",
-                        curveness: 0.0,
+                        curveness: 0.1,
                     },
                     // edgeSymbol: ["circle", "arrow"],
                     // edgeSymbolSize: [4, 10],
@@ -146,20 +147,20 @@ export default function useGraph() {
             ],
         };
         graphDisplay.value!.setOption(option.value);
-        graphDisplay.value!.on("click", (event) => {
-            console.log(event);
-            if (event.dataType === "node") {
-                dataToDisplay.value = graph.value.getNodeById(event.data.id);
-                drawer_toggle.value!.checked = true;
-            }
-        });
         graphDisplay.value!.hideLoading();
     }
 
-    function initGraph(chartDom: Ref<HTMLElement | null>) {
+    function initGraph(chartDom: Ref<HTMLElement | null>, drawer_toggle: Ref<HTMLInputElement | null>) {
         if (firstLoad.value) {
             graphDisplay.value = echarts.init(chartDom.value);
             option.value && graphDisplay.value!.setOption(option.value);
+            graphDisplay.value!.on("click", (event) => {
+                console.log(event);
+                if (event.dataType === "node") {
+                    dataToDisplay.value = graph.value.getNodeById(event.data.id);
+                    if (dataToDisplay.value) drawer_toggle.value!.checked = true;
+                }
+            });
             firstLoad.value = false;
         }
     }

@@ -10,8 +10,8 @@
     onMounted(() => {
         if (drawerToggle.value == null) drawerToggle.value = <HTMLInputElement>document.getElementById("my-drawer-4");
         if (chartDom.value == null) chartDom.value = document.getElementById("graph-canvas");
-        initGraph(chartDom);
-        refreshGraph(drawerToggle);
+        initGraph(chartDom, drawerToggle);
+        refreshGraph();
     });
 </script>
 
