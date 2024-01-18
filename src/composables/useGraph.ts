@@ -6,8 +6,11 @@ import { GraphChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 
 import data from "../assets/example/example_echarts.json";
-import graphExemple from "../assets/example/example_graph.json";
-import { Graph } from "../types/Graph";
+import graphApiExemple from "../assets/example/example_api.json";
+import { Graph, NodeType } from "../types/Graph";
+import { Node } from "../types/Node";
+import { Edge } from "../types/Edge";
+import { get } from "node_modules/axios/index.d.cts";
 
 interface node {
     id: number;
@@ -31,9 +34,10 @@ interface category {
 
 const graph = ref(Graph.instance);
 const firstLoad = ref(true);
-const graphSource = ref(graphExemple);
+const graphSource = ref(graphApiExemple);
 const graphDisplay: Ref<echarts.ECharts | null> = ref(null);
 const option: Ref<ECBasicOption | null> = ref(null);
+const dataToDisplay: Ref<Node | Edge | undefined> = ref(undefined);
 
 const charOpts: Ref<{ nodes: node[]; links: link[]; categories: category[] }> = ref({
     nodes: [],
@@ -46,29 +50,60 @@ export default function useGraph() {
 
     graph.value.parseFromSource(graphSource.value);
 
+    function getGraphData() {
+        const nodes: node[] = [];
+        const links: link[] = [];
+        const categories: category[] = [];
+
+        graph.value.nodes.forEach((node) => {
+            categories.push({
+                name: NodeType[node.type],
+            });
+        });
+
+        graph.value.nodes.forEach((node) => {
+            nodes.push({
+                id: node.id,
+                name: node.name,
+                symbolSize: 50,
+                x: 0,
+                y: 0,
+                value: node.edges.length,
+                categorie: categories.findIndex((cat) => cat.name === NodeType[node.type]),
+            });
+        });
+        graph.value.edges.forEach((edge) => {
+            links.push({
+                source: edge.node1.id,
+                target: edge.node2.id,
+            });
+        });
+        return { nodes, links, categories };
+    }
+
     function refreshGraph(drawer_toggle: Ref<HTMLInputElement | null>) {
         graphDisplay.value!.showLoading();
 
-        charOpts.value = data;
-        graphDisplay.value!.hideLoading();
+        charOpts.value = getGraphData();
+
         charOpts.value.nodes.forEach(function (node) {
             node.label = {
                 show: node.symbolSize > 30,
             };
         });
+
         option.value = {
             title: {
-                text: "Les Miserables",
-                subtext: "Default layout",
-                top: "bottom",
-                left: "right",
+                text: "Assassin's Creed",
+                // subtext: "Default layout",
+                top: "top",
+                left: "left",
             },
             tooltip: {},
             legend: [
                 {
                     // selectedMode: 'single',
                     data: charOpts.value.categories.map(function (a) {
-                        // drawer_toggle.value!.checked = true;
                         return a.name;
                     }),
                 },
@@ -77,7 +112,7 @@ export default function useGraph() {
             animationEasingUpdate: "quinticInOut",
             series: [
                 {
-                    name: "Les Miserables",
+                    name: "Assassin's Creed",
                     type: "graph",
                     layout: "force",
                     data: charOpts.value.nodes,
@@ -90,8 +125,13 @@ export default function useGraph() {
                     },
                     lineStyle: {
                         color: "source",
-                        curveness: 0.3,
+                        curveness: 0.0,
                     },
+                    // edgeSymbol: ["circle", "arrow"],
+                    // edgeSymbolSize: [4, 10],
+                    // edgeLabel: {
+                    //     fontSize: 20,
+                    // },
                     emphasis: {
                         focus: "adjacency",
                         lineStyle: {
@@ -99,21 +139,27 @@ export default function useGraph() {
                         },
                     },
                     force: {
-                        repulsion: 500,
+                        repulsion: 50,
                     },
                     draggable: true,
                 },
             ],
         };
         graphDisplay.value!.setOption(option.value);
-
-        option && graphDisplay.value!.setOption(option.value);
+        graphDisplay.value!.on("click", (event) => {
+            console.log(event);
+            if (event.dataType === "node") {
+                dataToDisplay.value = graph.value.getNodeById(event.data.id);
+                drawer_toggle.value!.checked = true;
+            }
+        });
+        graphDisplay.value!.hideLoading();
     }
 
     function initGraph(chartDom: Ref<HTMLElement | null>) {
         if (firstLoad.value) {
             graphDisplay.value = echarts.init(chartDom.value);
-            console.log("set teh graph");
+            option.value && graphDisplay.value!.setOption(option.value);
             firstLoad.value = false;
         }
     }
@@ -127,6 +173,7 @@ export default function useGraph() {
     return {
         graph,
         graphDisplay,
+        dataToDisplay,
         parseGraph,
         refreshGraph,
         initGraph,

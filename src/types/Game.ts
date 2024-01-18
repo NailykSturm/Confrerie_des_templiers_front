@@ -1,18 +1,20 @@
-import { ANode } from "./ANode";
+import { NodeType } from "./Graph";
+import { Node, NodeInterface } from "./Node";
 
 export interface IGame {
     id: number;
     name: string;
     date: string;
     img: string;
+    type: NodeType;
 }
 
-export class Game extends ANode {
+export class Game extends Node {
     private _date: string;
     private _img: string;
 
     constructor(game: IGame) {
-        super(game.id, game.name);
+        super(game as NodeInterface);
         this._date = game.date;
         this._img = game.img;
     }
@@ -25,11 +27,17 @@ export class Game extends ANode {
         return this._img;
     }
 
-    toString(): string {
+    override toString(): string {
         return `Game ${this.name}`;
     }
 
-    getAttributes(): object {
-        throw new Error("Method not implemented.");
+    override getAttributes(): object {
+        return {
+            id: this.id,
+            name: this.name,
+            date: this.date,
+            img: this.img,
+            type: this.type,
+        };
     }
 }
