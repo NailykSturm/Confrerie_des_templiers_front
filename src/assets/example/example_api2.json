@@ -1,0 +1,295 @@
+{
+    "nodes": [
+        {
+            "date": "2014-11-11",
+            "img": "",
+            "name": "Assassin's Creed Rogue",
+            "id": 9,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2017-10-27",
+            "img": "",
+            "name": "Assassin's Creed Origins",
+            "id": 12,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2013-12-17",
+            "img": "",
+            "name": "Assassin's Creed Freedom Cry",
+            "id": 17,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2012-10-30",
+            "img": "",
+            "name": "Assassin's Creed III",
+            "id": 7,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2012-10-30",
+            "img": "",
+            "name": "Assassin's Creed III Liberation",
+            "id": 16,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2009-11-17",
+            "img": "https://upload.wikimedia.org/wikipedia/commons/0/07/Assassin%E2%80%99s_Creed_II_v1_logo.svg",
+            "name": "Assassin's Creed II",
+            "id": 4,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2023-10-05",
+            "img": "",
+            "name": "Assassin's Creed Mirage",
+            "id": 15,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2023-11-16",
+            "img": "",
+            "name": "Assassin's Creed Nexus",
+            "id": 23,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2013-10-29",
+            "img": "",
+            "name": "Assassin's Creed IV Black Flag",
+            "id": 8,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2015-04-21",
+            "img": "",
+            "name": "Assassin's Creed Chronicles: China",
+            "id": 18,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2018-11-21",
+            "img": "",
+            "name": "Assassin's Creed Rebellion",
+            "id": 22,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2016-02-09",
+            "img": "",
+            "name": "Assassin's Creed Chronicles: Russia",
+            "id": 20,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2016-02-25",
+            "img": "",
+            "name": "Assassin's Creed Identity",
+            "id": 21,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2015-10-23",
+            "img": "",
+            "name": "Assassin's Creed Syndicate",
+            "id": 11,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2008-02-05",
+            "img": "",
+            "name": "Assassin's Creed Altaïr's Chronicles",
+            "id": 24,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2011-11-15",
+            "img": "",
+            "name": "Assassin's Creed Revelations",
+            "id": 6,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2007-11-13",
+            "img": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Assassin%E2%80%99s_Creed.svg",
+            "name": "Assassin's Creed",
+            "id": 3,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2018-10-05",
+            "img": "",
+            "name": "Assassin's Creed Odyssey",
+            "id": 13,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2010-11-16",
+            "img": "",
+            "name": "Assassin's Creed Brotherhood",
+            "id": 5,
+            "type": "JeuPrincipal"
+        },
+        {
+            "date": "2014-11-11",
+            "img": "",
+            "name": "Assassin's Creed Unity",
+            "id": 10,
+            "type": "JeuPrincipal"
+        },
+        {
+            "name": "JeuPrincipal",
+            "id": 2,
+            "type": "Concept"
+        },
+        {
+            "name": "SpinOff",
+            "id": 1,
+            "type": "Concept"
+        },
+        {
+            "date": "2016-01-12",
+            "img": "",
+            "name": "Assassin's Creed Chronicles: India",
+            "id": 19,
+            "type": "SpinOff"
+        },
+        {
+            "date": "2020-11-10",
+            "img": "",
+            "name": "Assassin's Creed Valhalla",
+            "id": 14,
+            "type": "JeuPrincipal"
+        },
+        {
+            "name": "Jeu vidéo",
+            "id": 0,
+            "type": "Concept"
+        }
+    ],
+    "edges": [
+        {
+            "id1": 0,
+            "id2": 1,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 16,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 17,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 18,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 19,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 20,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 21,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 22,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 23,
+            "weight": 1.0
+        },
+        {
+            "id1": 1,
+            "id2": 24,
+            "weight": 1.0
+        },
+        {
+            "id1": 0,
+            "id2": 2,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 3,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 4,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 5,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 6,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 7,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 8,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 9,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 10,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 11,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 12,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 13,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 14,
+            "weight": 1.0
+        },
+        {
+            "id1": 2,
+            "id2": 15,
+            "weight": 1.0
+        }
+    ]
+}

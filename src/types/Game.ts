@@ -1,12 +1,8 @@
-import { NodeType } from "./Graph";
 import { Node, NodeInterface } from "./Node";
 
-export interface IGame {
-    id: number;
-    name: string;
+export interface IGame extends NodeInterface {
     date: string;
     img: string;
-    type: NodeType;
 }
 
 export class Game extends Node {
@@ -33,11 +29,9 @@ export class Game extends Node {
 
     override getAttributes(): object {
         return {
-            id: this.id,
-            name: this.name,
+            ...super.getAttributes(),
             date: this.date,
             img: this.img,
-            type: this.type,
         };
     }
 }

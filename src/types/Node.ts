@@ -39,6 +39,10 @@ export class Node {
         return this._type;
     }
 
+    get sumEdgesWeight(): number {
+        return this._edges.reduce((acc, edge) => acc + edge.weight, 0);
+    }
+
     addEdge(edge: Edge): void {
         this._edges.push(edge);
     }

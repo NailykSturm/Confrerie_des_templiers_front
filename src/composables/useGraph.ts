@@ -5,7 +5,8 @@ import { TitleComponent, TooltipComponent, LegendComponent } from "echarts/compo
 import { GraphChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 
-import graphApiExemple from "../assets/example/example_api.json";
+// import graphApiExemple from "../assets/example/example_api.json";
+import graphApiExemple2 from "../assets/example/example_api2.json";
 import { Graph, NodeType } from "../types/Graph";
 import { Node } from "../types/Node";
 import { Edge } from "../types/Edge";
@@ -20,11 +21,17 @@ interface node {
     x: number;
     y: number;
     value: number;
-    categorie: number;
+    category: number;
+    metadata?: any;
 }
 interface link {
     source: number;
     target: number;
+    lineStyle?: {
+        color?: string;
+        curveness?: number;
+        width?: number;
+    };
 }
 interface category {
     name: string;
@@ -32,7 +39,7 @@ interface category {
 
 const graph = ref(Graph.instance);
 const firstLoad = ref(true);
-const graphSource = ref(graphApiExemple);
+const graphSource = ref(graphApiExemple2);
 const graphDisplay: Ref<echarts.ECharts | null> = ref(null);
 const option: Ref<ECBasicOption | null> = ref(null);
 const dataToDisplay: Ref<Node | Edge | undefined> = ref(undefined);
@@ -53,11 +60,10 @@ export default function useGraph() {
         const links: link[] = [];
         const categories: category[] = [];
 
-        graph.value.nodes.forEach((node) => {
-            if (!categories.find((cat) => cat.name === NodeType[node.type]))
-                categories.push({
-                    name: NodeType[node.type],
-                });
+        graph.value.categories.forEach((cat) => {
+            categories.push({
+                name: cat,
+            });
         });
 
         graph.value.nodes.forEach((node) => {
@@ -68,14 +74,22 @@ export default function useGraph() {
                 x: 0,
                 y: 0,
                 value: node.edges.length,
-                categorie: categories.findIndex((cat) => cat.name === NodeType[node.type]),
+                category: categories.findIndex((cat) => cat.name === NodeType[node.type]),
+                metadata: {
+                    node_attributes: node.getAttributes(),
+                },
             });
         });
 
         graph.value.edges.forEach((edge) => {
             links.push({
-                source: edge.node1.id,
-                target: edge.node2.id,
+                source: nodes.findIndex((node) => node.id === edge.node1.id),
+                target: nodes.findIndex((node) => node.id === edge.node2.id),
+                lineStyle: {
+                    color: "#854263",
+                    curveness: 0.1,
+                    width: edge.weight * 5,
+                },
             });
         });
         console.log({ nodes, links, categories });
@@ -128,6 +142,9 @@ export default function useGraph() {
                         color: "source",
                         curveness: 0.1,
                     },
+                    labelLayout: {
+                        hideOverlap: true,
+                    },
                     // edgeSymbol: ["circle", "arrow"],
                     // edgeSymbolSize: [4, 10],
                     // edgeLabel: {
@@ -140,7 +157,7 @@ export default function useGraph() {
                         },
                     },
                     force: {
-                        repulsion: 50,
+                        repulsion: 10,
                     },
                     draggable: true,
                 },
