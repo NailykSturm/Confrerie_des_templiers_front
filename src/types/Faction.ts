@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import FactionVue from "../components/template/Faction.vue";
 import { INode, Node } from "./Node";
 
@@ -23,7 +25,7 @@ export class Faction extends Node {
         return this._img;
     }
 
-    override get displayComponent() {
+    override get displayComponent(): Component {
         return FactionVue;
     }
 

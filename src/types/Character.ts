@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import CharacterVue from "../components/template/Character.vue";
 import { INode, Node } from "./Node";
 
@@ -17,7 +19,7 @@ export class Character extends Node {
         return this._img;
     }
 
-    override get displayComponent() {
+    override get displayComponent(): Component {
         return CharacterVue;
     }
     override toString(): string {

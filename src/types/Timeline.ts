@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import TimelineVue from "../components/template/Timeline.vue";
 import { INode, Node } from "./Node";
 
@@ -23,7 +25,7 @@ export class Timeline extends Node {
         return this._end;
     }
 
-    override get displayComponent() {
+    override get displayComponent(): Component {
         return TimelineVue;
     }
 

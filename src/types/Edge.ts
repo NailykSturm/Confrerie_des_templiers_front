@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import EdgeVue from "../components/template/Edge.vue";
 import { DisplayType } from "./DisplayType";
 import { Graph } from "./Graph";
@@ -42,7 +44,7 @@ export class Edge extends DisplayType {
         return this._node2;
     }
 
-    override get displayComponent() {
+    override get displayComponent(): Component {
         return EdgeVue;
     }
 

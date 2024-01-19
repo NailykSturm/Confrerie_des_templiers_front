@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import SupportVue from "../components/template/Support.vue";
 import { INode, Node } from "./Node";
 
@@ -17,7 +19,7 @@ export class Support extends Node {
         return this._img;
     }
 
-    override get displayComponent() {
+    override get displayComponent(): Component {
         return SupportVue;
     }
 

@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import Default from "../components/template/Default.vue";
 
 export const DEFAULT_COMPONENT = Default;
@@ -5,7 +7,7 @@ export const DEFAULT_COMPONENT = Default;
 export class DisplayType {
     constructor() {}
 
-    get displayComponent() {
+    get displayComponent(): Component {
         return Default;
     }
 

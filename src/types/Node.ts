@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import NodeVue from "../components/template/Node.vue";
 import { Edge } from "./Edge";
 import { NodeType } from "./Graph";
@@ -54,7 +56,7 @@ export class Node extends DisplayType {
         this._edges = this._edges.filter((e) => e !== edge);
     }
 
-    override get displayComponent() {
+    override get displayComponent(): Component {
         return NodeVue;
     }
 

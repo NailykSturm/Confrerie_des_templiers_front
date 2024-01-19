@@ -196,7 +196,7 @@ export default function useGraph() {
             graphDisplay.value!.on("click", (event) => {
                 // console.log(event);
                 if (event.dataType === "node") {
-                    dataToDisplay.value = graph.value.getNodeById((<Node>event.data).id);
+                    dataToDisplay.value = <DisplayType | undefined>graph.value.getNodeById((<Node>event.data).id);
                     console.log(event.data);
                     if (dataToDisplay.value) {
                         componentToDisplay.value = dataToDisplay.value.displayComponent;

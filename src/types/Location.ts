@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import LocationVue from "../components/template/Location.vue";
 import { INode, Node } from "./Node";
 
@@ -17,7 +19,7 @@ export class Location extends Node {
         return this._images;
     }
 
-    override get displayComponent() {
+    override get displayComponent(): Component {
         return LocationVue;
     }
 

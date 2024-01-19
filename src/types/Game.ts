@@ -1,3 +1,5 @@
+import { Component } from "vue";
+
 import GameVue from "../components/template/Game.vue";
 import { Node, INode } from "./Node";
 
@@ -24,7 +26,7 @@ export class Game extends Node {
         return this._img;
     }
 
-    override get displayComponent() {
+    override get displayComponent(): Component {
         return GameVue;
     }
 
