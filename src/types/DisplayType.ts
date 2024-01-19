@@ -1,4 +1,4 @@
-import * as Default from "../components/template/Default.vue";
+import Default from "../components/template/Default.vue";
 
 export const DEFAULT_COMPONENT = Default;
 

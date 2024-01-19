@@ -1,3 +1,4 @@
+import TimelineVue from "../components/template/Timeline.vue";
 import { INode, Node } from "./Node";
 
 export interface ITimeline extends INode {
@@ -20,6 +21,10 @@ export class Timeline extends Node {
     }
     get end(): number {
         return this._end;
+    }
+
+    override get displayComponent() {
+        return TimelineVue;
     }
 
     override toString(): string {

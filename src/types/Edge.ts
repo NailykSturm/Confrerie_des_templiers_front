@@ -1,7 +1,4 @@
-/**
- * @abstract Edge class
- */
-
+import EdgeVue from "../components/template/Edge.vue";
 import { DisplayType } from "./DisplayType";
 import { Graph } from "./Graph";
 import { Node } from "./Node";
@@ -45,7 +42,11 @@ export class Edge extends DisplayType {
         return this._node2;
     }
 
-    toString(): string {
+    override get displayComponent() {
+        return EdgeVue;
+    }
+
+    override toString(): string {
         return `Edge(${this.node1.name} - ${this.node2.name} : ${this.weight})`;
     }
 

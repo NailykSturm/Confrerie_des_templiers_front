@@ -1,3 +1,4 @@
+import CharacterVue from "../components/template/Character.vue";
 import { INode, Node } from "./Node";
 
 export interface ICharacter extends INode {
@@ -16,6 +17,9 @@ export class Character extends Node {
         return this._img;
     }
 
+    override get displayComponent() {
+        return CharacterVue;
+    }
     override toString(): string {
         return `Character ${this.name}`;
     }

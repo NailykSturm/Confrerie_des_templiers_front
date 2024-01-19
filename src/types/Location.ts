@@ -1,3 +1,4 @@
+import LocationVue from "../components/template/Location.vue";
 import { INode, Node } from "./Node";
 
 export interface ILocation extends INode {
@@ -14,6 +15,10 @@ export class Location extends Node {
 
     get images(): Record<string, string> {
         return this._images;
+    }
+
+    override get displayComponent() {
+        return LocationVue;
     }
 
     override toString(): string {

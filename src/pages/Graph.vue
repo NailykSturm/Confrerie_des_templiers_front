@@ -26,10 +26,9 @@
             <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
             <ul class="menu p-4 w-4/6 min-h-full bg-base-200 text-base-content">
                 <!-- Sidebar content here -->
-                <!-- <template v-if="componentToDisplay != null"> -->
-                <!-- <component :is="componentToDisplay" /> -->
-                <componentToDisplay />
-                <!-- </template> -->
+                <template v-if="componentToDisplay != null">
+                    <component :is="componentToDisplay" />
+                </template>
             </ul>
         </div>
     </div>

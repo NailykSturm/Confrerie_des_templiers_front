@@ -1,4 +1,4 @@
-import { Ref, ShallowRef, ref } from "vue";
+import { Ref, ShallowRef, ref, shallowRef } from "vue";
 import { ECBasicOption } from "echarts/types/dist/shared";
 import * as echarts from "echarts/core";
 import { TitleComponent, TooltipComponent, LegendComponent } from "echarts/components";
@@ -6,11 +6,8 @@ import { GraphChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 import axios from "axios";
 
-// import graphApiExemple from "../assets/example/example_api.json";
-// import graphApiExemple2 from "../assets/example/example_api2.json";
 import { Graph, NodeType } from "../types/Graph";
 import { Node } from "../types/Node";
-// import { DisplayType } from "../types/DisplayType";
 import useLoading from "./useLoading";
 import { DEFAULT_COMPONENT, DisplayType } from "../types/DisplayType";
 
@@ -50,7 +47,7 @@ const graphSource = ref(null);
 const graphDisplay: Ref<echarts.ECharts | null> = ref(null);
 const option: Ref<ECBasicOption | null> = ref(null);
 const dataToDisplay: Ref<DisplayType | undefined> = ref(undefined);
-const componentToDisplay: ShallowRef = ref(DEFAULT_COMPONENT);
+const componentToDisplay: ShallowRef = shallowRef(DEFAULT_COMPONENT);
 
 const charOpts: Ref<{ nodes: node[]; links: link[]; categories: category[] }> = ref({
     nodes: [],
@@ -200,7 +197,7 @@ export default function useGraph() {
                 // console.log(event);
                 if (event.dataType === "node") {
                     dataToDisplay.value = graph.value.getNodeById((<Node>event.data).id);
-                    console.log(dataToDisplay.value);
+                    console.log(event.data);
                     if (dataToDisplay.value) {
                         componentToDisplay.value = dataToDisplay.value.displayComponent;
                         drawer_toggle.value!.checked = true;

@@ -6,7 +6,7 @@
 
 <template>
     <div v-if="dataToDisplay">
-        <h1 class="text-2xl">Node : {{ dataToDisplay.toString() }}</h1>
+        <h1 class="text-2xl">Faction : {{ dataToDisplay.toString() }}</h1>
         <div v-for="(value, key) in dataToDisplay.getAttributes()">
             <li>{{ key }}: {{ value }}</li>
         </div>

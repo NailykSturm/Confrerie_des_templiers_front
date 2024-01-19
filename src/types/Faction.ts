@@ -1,3 +1,4 @@
+import FactionVue from "../components/template/Faction.vue";
 import { INode, Node } from "./Node";
 
 export interface IFaction extends INode {
@@ -20,6 +21,10 @@ export class Faction extends Node {
     }
     get img(): string {
         return this._img;
+    }
+
+    override get displayComponent() {
+        return FactionVue;
     }
 
     override toString(): string {

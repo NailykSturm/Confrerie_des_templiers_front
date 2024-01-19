@@ -1,3 +1,4 @@
+import GameVue from "../components/template/Game.vue";
 import { Node, INode } from "./Node";
 
 export interface IGame extends INode {
@@ -21,6 +22,10 @@ export class Game extends Node {
 
     get img(): string {
         return this._img;
+    }
+
+    override get displayComponent() {
+        return GameVue;
     }
 
     override toString(): string {
