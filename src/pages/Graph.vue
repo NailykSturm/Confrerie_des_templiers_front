@@ -2,7 +2,7 @@
     import { Ref, onMounted, ref } from "vue";
 
     import useGraph from "../composables/useGraph";
-    const { dataToDisplay, refreshGraph, initGraph } = useGraph();
+    const { componentToDisplay, refreshGraph, initGraph } = useGraph();
 
     const chartDom: Ref<HTMLElement | null> = ref(null);
     const drawerToggle: Ref<HTMLInputElement | null> = ref(null);
@@ -20,19 +20,16 @@
         <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content h-full w-full">
             <!-- Page content here -->
-            <!-- <label for="my-drawer-4" class="drawer-button">Open drawer</label> -->
-            <!-- <canvas ref="canvas" id="graph-canvas" class="grow"></canvas> -->
             <div class="h-full w-full bg-base-100" id="graph-canvas"></div>
         </div>
         <div class="drawer-side">
             <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
-            <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <ul class="menu p-4 w-4/6 min-h-full bg-base-200 text-base-content">
                 <!-- Sidebar content here -->
-                <template v-if="dataToDisplay">
-                    <div v-for="(value, key) in dataToDisplay.getAttributes()">
-                        <li>{{ key }}: {{ value }}</li>
-                    </div>
-                </template>
+                <!-- <template v-if="componentToDisplay != null"> -->
+                <!-- <component :is="componentToDisplay" /> -->
+                <componentToDisplay />
+                <!-- </template> -->
             </ul>
         </div>
     </div>

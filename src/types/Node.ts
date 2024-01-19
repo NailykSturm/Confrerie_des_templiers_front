@@ -1,5 +1,8 @@
 import { Edge } from "./Edge";
 import { NodeType } from "./Graph";
+import { DisplayType } from "./DisplayType";
+
+import * as NodeVue from "../components/template/Node.vue";
 
 export interface INode {
     id: number;
@@ -10,13 +13,14 @@ export interface INode {
 /**
  * @abstract Node class
  */
-export class Node {
+export class Node extends DisplayType {
     private _id: number;
     private _name: string;
     private _edges: Edge[];
     private _type: NodeType;
 
     constructor(node: INode) {
+        super();
         this._id = node.id;
         this._name = node.name;
         this._edges = [];
@@ -39,6 +43,10 @@ export class Node {
         return this._type;
     }
 
+    override get displayComponent() {
+        return NodeVue;
+    }
+
     get sumEdgesWeight(): number {
         return this._edges.reduce((acc, edge) => acc + edge.weight, 0);
     }
@@ -52,10 +60,10 @@ export class Node {
     }
 
     toString(): string {
-        return `Node(${this.name})`;
+        return `Node (${this.name})`;
     }
 
-    getAttributes(): object {
+    override getAttributes(): object {
         return {
             id: this.id,
             name: this.name,

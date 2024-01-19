@@ -2,25 +2,35 @@
  * @abstract Edge class
  */
 
+import { DisplayType } from "./DisplayType";
+import { Graph } from "./Graph";
 import { Node } from "./Node";
 
-export class Edge {
-    private _name: string;
+export interface IEdge {
+    label: string;
+    weight: number;
+    id1: number;
+    id2: number;
+}
+
+export class Edge extends DisplayType {
+    private _label: string;
     private _weight: number;
     private _node1: Node;
     private _node2: Node;
 
-    constructor(name: string, weight: number, source: Node, target: Node) {
-        this._name = name;
-        this._weight = weight;
-        this._node1 = source;
-        this._node2 = target;
+    constructor(edge: IEdge) {
+        super();
+        this._label = edge.label;
+        this._weight = edge.weight;
+        this._node1 = Graph.instance.getNodeById(edge.id1)!;
+        this._node2 = Graph.instance.getNodeById(edge.id2)!;
         this._node1.addEdge(this);
         this._node2.addEdge(this);
     }
 
-    get name(): string {
-        return this._name;
+    get label(): string {
+        return this._label;
     }
 
     get weight(): number {
@@ -39,9 +49,9 @@ export class Edge {
         return `Edge(${this.node1.name} - ${this.node2.name} : ${this.weight})`;
     }
 
-    getAttributes(): object {
+    override getAttributes(): object {
         return {
-            name: this.name,
+            name: this.label,
             weight: this.weight,
             node1: this.node1,
             node2: this.node2,

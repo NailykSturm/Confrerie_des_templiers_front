@@ -1,4 +1,4 @@
-import { Ref, ref } from "vue";
+import { Ref, ShallowRef, ref } from "vue";
 import { ECBasicOption } from "echarts/types/dist/shared";
 import * as echarts from "echarts/core";
 import { TitleComponent, TooltipComponent, LegendComponent } from "echarts/components";
@@ -7,11 +7,12 @@ import { CanvasRenderer } from "echarts/renderers";
 import axios from "axios";
 
 // import graphApiExemple from "../assets/example/example_api.json";
-import graphApiExemple2 from "../assets/example/example_api2.json";
+// import graphApiExemple2 from "../assets/example/example_api2.json";
 import { Graph, NodeType } from "../types/Graph";
 import { Node } from "../types/Node";
-import { Edge } from "../types/Edge";
+// import { DisplayType } from "../types/DisplayType";
 import useLoading from "./useLoading";
+import { DEFAULT_COMPONENT, DisplayType } from "../types/DisplayType";
 
 interface node {
     id: number;
@@ -45,10 +46,11 @@ interface category {
 
 const graph = ref(Graph.instance);
 const firstLoad = ref(true);
-const graphSource = ref(graphApiExemple2);
+const graphSource = ref(null);
 const graphDisplay: Ref<echarts.ECharts | null> = ref(null);
 const option: Ref<ECBasicOption | null> = ref(null);
-const dataToDisplay: Ref<Node | Edge | undefined> = ref(undefined);
+const dataToDisplay: Ref<DisplayType | undefined> = ref(undefined);
+const componentToDisplay: ShallowRef = ref(DEFAULT_COMPONENT);
 
 const charOpts: Ref<{ nodes: node[]; links: link[]; categories: category[] }> = ref({
     nodes: [],
@@ -58,8 +60,6 @@ const charOpts: Ref<{ nodes: node[]; links: link[]; categories: category[] }> = 
 
 export default function useGraph() {
     echarts.use([TitleComponent, TooltipComponent, LegendComponent, GraphChart, CanvasRenderer]);
-
-    graph.value.parseFromSource(graphSource.value);
 
     function getGraphData() {
         const nodes: node[] = [];
@@ -97,11 +97,12 @@ export default function useGraph() {
                     width: edge.weight * 5,
                 },
                 label: {
-                    show: true,
-                    formatter: edge.name,
+                    show: false,
+                    formatter: edge.label,
                 },
             });
         });
+        console.log({ nodes, links, categories });
         return { nodes, links, categories };
     }
 
@@ -121,11 +122,17 @@ export default function useGraph() {
         option.value = {
             title: {
                 text: "Assassin's Creed",
-                // subtext: "Default layout",
+                subtext: "Rien est vrai, tout est permis",
                 top: "top",
                 left: "left",
             },
-            tooltip: {},
+            tooltip: {
+                formatter: (params: any) => {
+                    if (params.dataType === "node") return (<Node>params.data).name;
+                    else if (params.dataType === "edge") return params.data.label.formatter;
+                    return "";
+                },
+            },
             legend: [
                 {
                     // selectedMode: 'single',
@@ -146,7 +153,7 @@ export default function useGraph() {
                     categories: charOpts.value.categories,
                     roam: true,
                     label: {
-                        position: "right",
+                        position: "inside",
                         formatter: "{b}",
                     },
                     lineStyle: {
@@ -186,36 +193,45 @@ export default function useGraph() {
             graphDisplay.value!.on("contextmenu", (event) => {
                 event.event?.event.preventDefault();
                 if (event.dataType === "node") {
-                    fetchGraph(event.data.name.replace(/ /g, "_"));
+                    fetchGraph((<Node>event.data).name.replace(/ /g, "_"));
                 }
             });
             graphDisplay.value!.on("click", (event) => {
+                // console.log(event);
                 if (event.dataType === "node") {
-                    dataToDisplay.value = graph.value.getNodeById(event.data.id);
-                    if (dataToDisplay.value) drawer_toggle.value!.checked = true;
+                    dataToDisplay.value = graph.value.getNodeById((<Node>event.data).id);
+                    console.log(dataToDisplay.value);
+                    if (dataToDisplay.value) {
+                        componentToDisplay.value = dataToDisplay.value.displayComponent;
+                        drawer_toggle.value!.checked = true;
+                    }
                 }
             });
             firstLoad.value = false;
         }
     }
 
-    function fetchGraph(request?: string) {
+    function fetchGraph(request?: string, refresh: boolean = true) {
         axios
             .get(`${import.meta.env.VITE_API_URL}/graph${request ? `/${request}` : ""}`)
             .then((response) => {
+                console.log(response.data);
                 graphSource.value = response.data;
                 graph.value.parseFromSource(graphSource.value);
-                refreshGraph();
+                if (refresh) refreshGraph();
             })
             .catch((error) => {
                 console.log(error);
             });
     }
 
+    fetchGraph(undefined, false);
+
     return {
         graph,
         graphDisplay,
         dataToDisplay,
+        componentToDisplay,
         fetchGraph,
         refreshGraph,
         initGraph,
