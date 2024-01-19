@@ -4,6 +4,8 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm install
 COPY ./ /app/
+ENV ENV_FILE=.env.prod
+COPY $ENV_FILE /app/.env
 RUN npm run build
 
 

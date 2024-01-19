@@ -8,6 +8,3 @@ dist
 # IDE
 .idea
 .vscode
-
-# Environment
-.env
