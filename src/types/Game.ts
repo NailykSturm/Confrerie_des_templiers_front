@@ -1,6 +1,6 @@
-import { Node, NodeInterface } from "./Node";
+import { Node, INode } from "./Node";
 
-export interface IGame extends NodeInterface {
+export interface IGame extends INode {
     date: string;
     img: string;
 }
@@ -10,7 +10,7 @@ export class Game extends Node {
     private _img: string;
 
     constructor(game: IGame) {
-        super(game as NodeInterface);
+        super(game as INode);
         this._date = game.date;
         this._img = game.img;
     }

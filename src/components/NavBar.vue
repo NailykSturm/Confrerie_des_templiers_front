@@ -1,5 +1,8 @@
 <script setup lang="ts">
     import { theme as usedTheme, list_themes, changeTheme } from "../vuex-store/theme";
+
+    import useGraph from "../composables/useGraph";
+    const { fetchGraph } = useGraph();
 </script>
 
 <template>
@@ -10,6 +13,13 @@
             <!-- <router-link class="btn btn-ghost" to="/about">About</router-link> | -->
             <!-- <router-link class="btn btn-ghost" to="/non-existent-path">Broken Link</router-link> -->
         </div>
+
+        <div>
+            <button class="btn" v-on:click="fetchGraph()">
+                <img :width="16" src="../assets/imgs/rafraichir.png" />
+            </button>
+        </div>
+
         <div>
             <div class="dropdown dropdown-end">
                 <label tabindex="0" class="btn btn-ghost rounded-btn">Theme</label>

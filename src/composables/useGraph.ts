@@ -4,12 +4,14 @@ import * as echarts from "echarts/core";
 import { TitleComponent, TooltipComponent, LegendComponent } from "echarts/components";
 import { GraphChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
+import axios from "axios";
 
 // import graphApiExemple from "../assets/example/example_api.json";
 import graphApiExemple2 from "../assets/example/example_api2.json";
 import { Graph, NodeType } from "../types/Graph";
 import { Node } from "../types/Node";
 import { Edge } from "../types/Edge";
+import useLoading from "./useLoading";
 
 interface node {
     id: number;
@@ -31,6 +33,10 @@ interface link {
         color?: string;
         curveness?: number;
         width?: number;
+    };
+    label?: {
+        show: boolean;
+        formatter: string;
     };
 }
 interface category {
@@ -86,18 +92,23 @@ export default function useGraph() {
                 source: nodes.findIndex((node) => node.id === edge.node1.id),
                 target: nodes.findIndex((node) => node.id === edge.node2.id),
                 lineStyle: {
-                    color: "#854263",
+                    // color: "#854263",
                     curveness: 0.1,
                     width: edge.weight * 5,
                 },
+                label: {
+                    show: true,
+                    formatter: edge.name,
+                },
             });
         });
-        console.log({ nodes, links, categories });
         return { nodes, links, categories };
     }
 
     function refreshGraph() {
         graphDisplay.value!.showLoading();
+        const { setLoading } = useLoading();
+        setLoading(true);
 
         charOpts.value = getGraphData();
 
@@ -142,9 +153,9 @@ export default function useGraph() {
                         color: "source",
                         curveness: 0.1,
                     },
-                    labelLayout: {
-                        hideOverlap: true,
-                    },
+                    // labelLayout: {
+                    //     hideOverlap: true,
+                    // },
                     // edgeSymbol: ["circle", "arrow"],
                     // edgeSymbolSize: [4, 10],
                     // edgeLabel: {
@@ -165,14 +176,20 @@ export default function useGraph() {
         };
         graphDisplay.value!.setOption(option.value);
         graphDisplay.value!.hideLoading();
+        setLoading(false);
     }
 
     function initGraph(chartDom: Ref<HTMLElement | null>, drawer_toggle: Ref<HTMLInputElement | null>) {
         if (firstLoad.value) {
             graphDisplay.value = echarts.init(chartDom.value);
             option.value && graphDisplay.value!.setOption(option.value);
+            graphDisplay.value!.on("contextmenu", (event) => {
+                event.event?.event.preventDefault();
+                if (event.dataType === "node") {
+                    fetchGraph(event.data.name.replace(/ /g, "_"));
+                }
+            });
             graphDisplay.value!.on("click", (event) => {
-                console.log(event);
                 if (event.dataType === "node") {
                     dataToDisplay.value = graph.value.getNodeById(event.data.id);
                     if (dataToDisplay.value) drawer_toggle.value!.checked = true;
@@ -182,17 +199,24 @@ export default function useGraph() {
         }
     }
 
-    function parseGraph() {
-        /** // TODO : parse graph
-         * Create nodes and edges from the graph
-         */
+    function fetchGraph(request?: string) {
+        axios
+            .get(`${import.meta.env.VITE_API_URL}/graph${request ? `/${request}` : ""}`)
+            .then((response) => {
+                graphSource.value = response.data;
+                graph.value.parseFromSource(graphSource.value);
+                refreshGraph();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     return {
         graph,
         graphDisplay,
         dataToDisplay,
-        parseGraph,
+        fetchGraph,
         refreshGraph,
         initGraph,
     };

@@ -1,14 +1,19 @@
 import { ref } from "vue";
 
+const isLoading = ref(false);
+
 export default function useLoading() {
-  const isLoading = ref(false);
+    function setLoading(value: boolean) {
+        isLoading.value = value;
+    }
 
-  function toggleLoading() {
-    isLoading.value = !isLoading.value;
-  }
+    function toggleLoading() {
+        setLoading(!isLoading.value);
+    }
 
-  return {
-    isLoading,
-    toggleLoading,
-  };
+    return {
+        isLoading,
+        toggleLoading,
+        setLoading,
+    };
 }

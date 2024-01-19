@@ -1,7 +1,7 @@
 import { Edge } from "./Edge";
 import { NodeType } from "./Graph";
 
-export interface NodeInterface {
+export interface INode {
     id: number;
     name: string;
     type: NodeType;
@@ -16,7 +16,7 @@ export class Node {
     private _edges: Edge[];
     private _type: NodeType;
 
-    constructor(node: NodeInterface) {
+    constructor(node: INode) {
         this._id = node.id;
         this._name = node.name;
         this._edges = [];

@@ -1,6 +1,11 @@
 import { Node } from "./Node";
 import { Edge } from "./Edge";
 import { Game } from "./Game";
+import { Location } from "./Location";
+import { Support } from "./Support";
+import { Character } from "./Character";
+import { Timeline } from "./Timeline";
+import { Faction } from "./Faction";
 
 export enum NodeType {
     Node = "Node",
@@ -8,6 +13,11 @@ export enum NodeType {
     JeuPrincipal = "JeuPrincipal",
     SpinOff = "SpinOff",
     Concept = "Concept",
+    Localisation = "Localisation",
+    Support = "Support",
+    Character = "Character",
+    Timeline = "Timeline",
+    Faction = "Faction",
 }
 export enum ResponseType {
     Nodes = "nodes",
@@ -36,6 +46,7 @@ export class Graph {
     parseFromSource(source: any) {
         this._nodes = [];
         this._edges = [];
+        this._categories = [];
         Object.keys(source).forEach((key) => {
             switch (key) {
                 case ResponseType.Nodes:
@@ -56,8 +67,24 @@ export class Graph {
                             case NodeType.Game:
                                 this.nodes.push(new Game(node));
                                 break;
+                            case NodeType.Localisation:
+                                this.nodes.push(new Location(node));
+                                break;
+                            case NodeType.Support:
+                                this.nodes.push(new Support(node));
+                                break;
+                            case NodeType.Character:
+                                this.nodes.push(new Character(node));
+                                break;
+                            case NodeType.Timeline:
+                                this.nodes.push(new Timeline(node));
+                                break;
+                            case NodeType.Faction:
+                                this.nodes.push(new Faction(node));
+                                break;
                             default:
                                 console.warn(`Node type ${node.type} not handled`);
+                                console.log(node);
                                 break;
                         }
                         if (!this._categories.includes(node.type)) this._categories.push(node.type);
@@ -79,7 +106,7 @@ export class Graph {
             }
         });
 
-        console.log(this);
+        // console.log(this);
     }
 
     get nodesCount(): number {

@@ -15,6 +15,7 @@
         setup() {
             return {
                 theme,
+                isLoading,
             };
         },
     });
