@@ -8,3 +8,7 @@ dist
 # IDE
 .idea
 .vscode
+
+# Environment
+.env
+.env.prod
