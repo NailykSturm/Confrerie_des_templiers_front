@@ -12,3 +12,5 @@ dist
 # Environment
 .env
 .env.prod
+
+fly.toml
