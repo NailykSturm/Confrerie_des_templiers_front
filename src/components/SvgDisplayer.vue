@@ -8,7 +8,7 @@
 </script>
 
 <template>
-    <div class="svg-displayer">
+    <div class="svg-displayer" v-if="svg_path != ''">
         <img :src="svg_path" class="w-28 h-28" alt="Too bad ..." />
     </div>
 </template>

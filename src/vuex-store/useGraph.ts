@@ -104,7 +104,7 @@ function getGraphData() {
     return { nodes, links, categories };
 }
 
-export function refreshGraph() {
+function refreshGraph() {
     graphDisplay.value!.showLoading();
     setLoading(true);
 
