@@ -1,9 +1,23 @@
 <script setup lang="ts">
+    import axios from "axios";
+    import { ref } from "vue";
+    import { WIKI_DESC } from "../../vite-env";
+
     import { Location } from "../../types/Location";
     import { dataToDisplay } from "../../vuex-store/useGraph";
     import SvgDisplayer from "../SvgDisplayer.vue";
 
     const location: Location = <Location>dataToDisplay.value;
+    const desc = ref("");
+
+    axios
+        .get(`${WIKI_DESC(location.name)}`)
+        .then((res) => {
+            desc.value = res.data.query.pages[0].extract;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 </script>
 
 <template>
@@ -12,5 +26,6 @@
         <div v-for="img in location.images">
             <SvgDisplayer :svg_path="img" />
         </div>
+        <div v-if="desc">{{ desc }}</div>
     </div>
 </template>

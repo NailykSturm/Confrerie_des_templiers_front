@@ -218,20 +218,18 @@ export function fetchGraph(request?: string) {
             refreshGraph();
         })
         .catch((error) => {
-            console.log(error);
+            console.error(error);
         });
 }
 
 function addHistory(request: string) {
     history.value.push(request);
-    console.log(history.value);
 }
 
 export function goHistoryBack() {
     if (history.value.length > 0) {
         history.value.pop();
         fetchGraph(history.value[history.value.length - 1]);
-        console.log(history.value);
         history.value.pop();
     }
 }
@@ -240,7 +238,6 @@ export function goHistoryBackIndex(index: number) {
     if (history.value.length > 0) {
         history.value.splice(index + 1, history.value.length - index);
         fetchGraph(history.value[history.value.length - 1]);
-        console.log(history.value);
         history.value.pop();
     }
 }
