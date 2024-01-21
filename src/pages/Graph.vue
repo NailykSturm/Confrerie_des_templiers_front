@@ -2,7 +2,7 @@
     import { Ref, onMounted, ref } from "vue";
 
     import useGraph from "../composables/useGraph";
-    const { componentToDisplay, refreshGraph, initGraph } = useGraph();
+    const { componentToDisplay, fetchGraph, initGraph } = useGraph();
 
     const chartDom: Ref<HTMLElement | null> = ref(null);
     const drawerToggle: Ref<HTMLInputElement | null> = ref(null);
@@ -11,7 +11,7 @@
         if (drawerToggle.value == null) drawerToggle.value = <HTMLInputElement>document.getElementById("my-drawer-4");
         if (chartDom.value == null) chartDom.value = document.getElementById("graph-canvas");
         initGraph(chartDom, drawerToggle);
-        refreshGraph();
+        fetchGraph();
     });
 </script>
 

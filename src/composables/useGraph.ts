@@ -78,9 +78,9 @@ export default function useGraph() {
                 y: 0,
                 value: node.edges.length,
                 category: categories.findIndex((cat) => cat.name === NodeType[node.type]),
-                metadata: {
-                    node_attributes: node.getAttributes(),
-                },
+                // metadata: {
+                //     node_attributes: node.getAttributes(),
+                // },
             });
         });
 
@@ -99,7 +99,7 @@ export default function useGraph() {
                 },
             });
         });
-        console.log({ nodes, links, categories });
+        // console.log({ nodes, links, categories });
         return { nodes, links, categories };
     }
 
@@ -197,7 +197,6 @@ export default function useGraph() {
                 // console.log(event);
                 if (event.dataType === "node") {
                     dataToDisplay.value = <DisplayType | undefined>graph.value.getNodeById((<Node>event.data).id);
-                    console.log(event.data);
                     if (dataToDisplay.value) {
                         componentToDisplay.value = dataToDisplay.value.displayComponent;
                         drawer_toggle.value!.checked = true;
@@ -208,21 +207,19 @@ export default function useGraph() {
         }
     }
 
-    function fetchGraph(request?: string, refresh: boolean = true) {
+    function fetchGraph(request?: string) {
         axios
             .get(`${import.meta.env.VITE_API_URL}/graph${request ? `/${request}` : ""}`)
             .then((response) => {
                 console.log(response.data);
                 graphSource.value = response.data;
                 graph.value.parseFromSource(graphSource.value);
-                if (refresh) refreshGraph();
+                refreshGraph();
             })
             .catch((error) => {
                 console.log(error);
             });
     }
-
-    fetchGraph(undefined, false);
 
     return {
         graph,
