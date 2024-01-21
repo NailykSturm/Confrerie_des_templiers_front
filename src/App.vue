@@ -1,24 +1,10 @@
 <script setup lang="ts">
-    import { defineComponent } from "vue";
     import "./assets/css/index.css";
 
     import NavBar from "./components/NavBar.vue";
-    import useLoading from "./composables/useLoading";
+    import { isLoading } from "./vuex-store/useLoading";
 
     import { theme } from "./vuex-store/theme";
-    const { isLoading } = useLoading();
-
-    defineComponent({
-        components: {
-            NavBar,
-        },
-        setup() {
-            return {
-                theme,
-                isLoading,
-            };
-        },
-    });
 </script>
 
 <template>

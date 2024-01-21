@@ -1,8 +1,7 @@
 <script setup lang="ts">
     import { Ref, onMounted, ref } from "vue";
 
-    import useGraph from "../composables/useGraph";
-    const { componentToDisplay, fetchGraph, initGraph } = useGraph();
+    import { componentToDisplay, fetchGraph, initGraph } from "../vuex-store/useGraph";
 
     const chartDom: Ref<HTMLElement | null> = ref(null);
     const drawerToggle: Ref<HTMLInputElement | null> = ref(null);

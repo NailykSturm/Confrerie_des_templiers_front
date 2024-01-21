@@ -1,9 +1,8 @@
 <script setup lang="ts">
     import { Location } from "../../types/Location";
-    import useGraph from "../../composables/useGraph";
+    import { dataToDisplay } from "../../vuex-store/useGraph";
     import SvgDisplayer from "../SvgDisplayer.vue";
 
-    const { dataToDisplay } = useGraph();
     const location: Location = <Location>dataToDisplay.value;
 </script>
 

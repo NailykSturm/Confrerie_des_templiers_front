@@ -1,9 +1,8 @@
 <script setup lang="ts">
     import { Faction } from "../../types/Faction";
-    import useGraph from "../../composables/useGraph";
+    import { dataToDisplay } from "../../vuex-store/useGraph";
     import SvgDisplayer from "../SvgDisplayer.vue";
 
-    const { dataToDisplay } = useGraph();
     const faction: Faction = <Faction>dataToDisplay.value;
 </script>
 

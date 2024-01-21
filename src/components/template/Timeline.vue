@@ -1,8 +1,7 @@
 <script setup lang="ts">
-    import useGraph from "../../composables/useGraph";
+    import { dataToDisplay } from "../../vuex-store/useGraph";
     import { Timeline } from "../../types/Timeline";
 
-    const { dataToDisplay } = useGraph();
     const timeline: Timeline = <Timeline>dataToDisplay.value;
 </script>
 

@@ -1,20 +1,30 @@
 <script setup lang="ts">
     import { theme as usedTheme, list_themes, changeTheme } from "../vuex-store/theme";
-
-    import useGraph from "../composables/useGraph";
-    const { fetchGraph } = useGraph();
+    import { history, fetchGraph, goHistoryBack, goHistoryBackIndex } from "../vuex-store/useGraph";
 </script>
 
 <template>
     <div class="navbar bg-base-300 flex justify-between">
         <div class="">
-            <!-- <router-link class="btn btn-ghost" to="/">Home</router-link> | -->
             <router-link class="btn btn-ghost" to="/graph">Graph</router-link>
-            <!-- <router-link class="btn btn-ghost" to="/about">About</router-link> | -->
-            <!-- <router-link class="btn btn-ghost" to="/non-existent-path">Broken Link</router-link> -->
         </div>
 
         <div>
+            <div>
+                <button class="btn" v-on:click="goHistoryBack()">
+                    <img :width="16" src="../assets/imgs/back.png" />
+                </button>
+                <div class="dropdown">
+                    <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">Historique</div>
+                    <ul
+                        tabindex="0"
+                        class="menu dropdown-content z-[2] p-2 shadow bg-base-200 rounded-box w-96 mt-4 overflow-auto max-h-64">
+                        <li v-for="(histo, index) in history">
+                            <a v-on:click="goHistoryBackIndex(index)">{{ histo }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <button class="btn" v-on:click="fetchGraph()">
                 <img :width="16" src="../assets/imgs/rafraichir.png" />
             </button>

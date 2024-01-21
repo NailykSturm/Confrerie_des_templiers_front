@@ -1,9 +1,8 @@
 <script setup lang="ts">
     import { Support } from "../../types/Support";
-    import useGraph from "../../composables/useGraph";
+    import { dataToDisplay } from "../../vuex-store/useGraph";
     import SvgDisplayer from "../SvgDisplayer.vue";
 
-    const { dataToDisplay } = useGraph();
     const support: Support = <Support>dataToDisplay.value;
 </script>
 

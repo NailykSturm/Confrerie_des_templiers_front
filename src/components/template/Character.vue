@@ -1,9 +1,8 @@
 <script setup lang="ts">
     import { Character } from "../../types/Character";
-    import useGraph from "../../composables/useGraph";
+    import { dataToDisplay } from "../../vuex-store/useGraph";
     import SvgDisplayer from "../SvgDisplayer.vue";
 
-    const { dataToDisplay } = useGraph();
     const character: Character = <Character>dataToDisplay.value;
 </script>
 

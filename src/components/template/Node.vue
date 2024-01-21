@@ -1,8 +1,7 @@
 <script setup lang="ts">
     import { Node } from "../../types/Node";
-    import useGraph from "../../composables/useGraph";
+    import { dataToDisplay } from "../../vuex-store/useGraph";
 
-    const { dataToDisplay } = useGraph();
     const node: Node = <Node>dataToDisplay.value;
 </script>
 

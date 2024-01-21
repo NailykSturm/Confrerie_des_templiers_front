@@ -1,9 +1,8 @@
 <script setup lang="ts">
     import { Game } from "../../types/Game";
-    import useGraph from "../../composables/useGraph";
+    import { dataToDisplay } from "../../vuex-store/useGraph";
     import SvgDisplayer from "../SvgDisplayer.vue";
 
-    const { dataToDisplay } = useGraph();
     const game: Game = <Game>dataToDisplay.value;
 </script>
 

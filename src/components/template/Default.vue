@@ -1,14 +1,5 @@
-<script lang="ts">
-    import { defineComponent } from "vue";
-    import useGraph from "../../composables/useGraph";
-
-    export default defineComponent({
-        name: "Node",
-        setup() {
-            const { dataToDisplay } = useGraph();
-            return { dataToDisplay };
-        },
-    });
+<script setup lang="ts">
+    import { dataToDisplay } from "../../vuex-store/useGraph";
 </script>
 
 <template>
