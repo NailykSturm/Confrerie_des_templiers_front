@@ -11,7 +11,19 @@
     const desc = ref("");
 
     axios
-        .get(`${WIKI_DESC(location.name)}`)
+        .get(`${WIKI_DESC}`, {
+            headers: {
+                Accept: '*/*',
+                'User-Agent': 'axios/1.3.5',
+                'Access-Control-Allow-Origin': "*"
+            },
+            data: {
+                origin: "*",
+                action: "query",
+                meta: "tokens",
+                format: "json",
+            },
+        })
         .then((res) => {
             desc.value = res.data.query.pages[0].extract;
         })

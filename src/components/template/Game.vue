@@ -11,16 +11,21 @@
     const desc = ref("");
 
     axios
-        .post(`${WIKI_DESC(game.name)}`, {
+        .get(`${WIKI_DESC}`, {
             headers: {
-                origin: "*",
+                "Access-Control-Allow-Origin": "*",
+                'Accept': '*/*',
+                'User-Agent': 'axios/1.3.5',
+                'Content-Type': 'application/json'
             },
-            data: {
-                origin: "*",
-                action: "query",
-                meta: "tokens",
-                format: "json",
-            },
+            params: {
+                'action': 'query',
+                'format': 'json',
+                'titles': game.name,
+                'prop': 'extracts',
+                'exintro': 1,
+                'explaintext': 1
+            }
         })
         .then((res) => {
             desc.value = res.data.query.pages[0].extract;
